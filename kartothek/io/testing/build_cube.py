@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import dask.dataframe
 import numpy as np
 import pandas as pd
 import pandas.testing as pdt
@@ -67,6 +68,23 @@ __all__ = (
     "test_simple_two_datasets",
     "test_split",
 )
+
+
+def test_shuffle_true(driver, function_store):
+    df = pd.DataFrame(
+        {
+            "range": np.arange(10),
+            "range_duplicated": np.repeat(np.arange(2), 5),
+            "random": np.random.randint(0, 100, 10),
+        }
+    )
+    ddf = dask.dataframe.from_pandas(df, npartitions=10)
+    cube = Cube(dimension_columns=["range"], partition_columns=["range_duplicated"],
+                uuid_prefix="cube")
+    result = driver(data=ddf, cube=cube, store=function_store, shuffle=True, bucket_by="range")
+
+    # TODO find assert to test partitions
+    # assert len(result.partitions) == 1
 
 
 def test_simple_seed_only(driver, function_store):

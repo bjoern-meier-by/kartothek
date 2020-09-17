@@ -35,7 +35,7 @@ def _count_execution_to_store(obj, store):
     return obj
 
 
-def test_dask_bag_fusing(driver, function_store, driver_name, skip_eager):
+def test_dask_bag_fusing(function_store, driver_name, skip_eager):
     """
     There were two issues with the dask.bag write path.
 
@@ -117,7 +117,7 @@ def test_dask_bag_fusing(driver, function_store, driver_name, skip_eager):
     assert len(tasks) == (n_partitions + 1)
 
 
-def test_function_executed_once(driver, function_store, driver_name, skip_eager):
+def test_function_executed_once(function_store, driver_name, skip_eager):
     """
     Test that the payload function is only executed once per branch.
 

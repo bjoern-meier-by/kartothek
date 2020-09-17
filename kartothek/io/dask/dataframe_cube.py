@@ -20,7 +20,7 @@ __all__ = (
 
 
 def build_cube_from_dataframe(
-    data, cube, store, metadata=None, overwrite=False, partition_on=None
+    data, cube, store, metadata=None, overwrite=False, partition_on=None, shuffle=False,
 ):
     """
     Create dask computation graph that builds a cube with the data supplied from a dask dataframe.
@@ -50,6 +50,7 @@ def build_cube_from_dataframe(
     """
     data, ktk_cube_dataset_ids = _ddfs_to_bag(data, cube)
 
+    # ddf = update_dataset_from_ddf(...)
     return (
         build_cube_from_bag_internal(
             data=data,
@@ -59,6 +60,7 @@ def build_cube_from_dataframe(
             metadata=metadata,
             overwrite=overwrite,
             partition_on=partition_on,
+            shuffle=shuffle,
         )
         .map_partitions(_unpack_list, default=None)
         .to_delayed()[0]

@@ -46,7 +46,7 @@ __all__ = (
 
 
 def build_cube_from_bag_internal(
-    data, cube, store, ktk_cube_dataset_ids, metadata, overwrite, partition_on
+    data, cube, store, ktk_cube_dataset_ids, metadata, overwrite, partition_on, shuffle
 ):
     """
     Create dask computation graph that builds a cube with the data supplied from a dask bag.

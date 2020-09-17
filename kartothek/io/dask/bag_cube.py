@@ -45,6 +45,7 @@ def build_cube_from_bag(
     metadata=None,
     overwrite=False,
     partition_on=None,
+    shuffle=False,
 ):
     """
     Create dask computation graph that builds a cube with the data supplied from a dask bag.
@@ -82,6 +83,7 @@ def build_cube_from_bag(
         metadata=metadata,
         overwrite=overwrite,
         partition_on=partition_on,
+        shuffle=shuffle
     )
 
 
